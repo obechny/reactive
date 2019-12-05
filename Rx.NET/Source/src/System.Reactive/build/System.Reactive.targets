@@ -2,11 +2,13 @@
   <PropertyGroup>
     <UseWindowsRxVersion Condition="'$(UseWpf)' == 'true' OR '$(UseWindowsForms)' == 'true'" >true</UseWindowsRxVersion>
     <UseWindowsRxVersion Condition="'$(UseWindowsRxVersion)' == '' " >false</UseWindowsRxVersion>
+    <WpfAndWinformsUsedTogether Condition="'$(UseWpf)' == 'true' AND '$(UseWindowsForms)' == 'true'" >true</WpfAndWinformsUsedTogether>
+    <IncludeWindowsDesktopReference Condition="'$(UseWindowsRxVersion)' == 'true' AND '$(WpfAndWinformsUsedTogether)' != 'true'" >true</IncludeWindowsDesktopReference>
   </PropertyGroup>
   <ItemGroup>
     <Reference Condition="'$(UseWindowsRxVersion)' == 'true' "  Include="$(MSBuildThisFileDirectory)..\..\build\netcoreapp3.0\System.Reactive.dll" />
     <Reference Condition="'$(UseWindowsRxVersion)' != 'true' "  Include="$(MSBuildThisFileDirectory)..\..\lib\netstandard2.0\System.Reactive.dll" />
 
-    <FrameworkReference Condition="'$(UseWindowsRxVersion)' == 'true' " Include="Microsoft.WindowsDesktop.App" />
+    <FrameworkReference Condition="'$(IncludeWindowsDesktopReference)' == 'true' " Include="Microsoft.WindowsDesktop.App" />
   </ItemGroup>
 </Project>
